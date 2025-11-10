@@ -45,7 +45,7 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.45); /* cambia l’opacità a piacere */
         z-index: 1;
-        }
+    }
 
     .image-container .moto {
         font-size: 2em;
