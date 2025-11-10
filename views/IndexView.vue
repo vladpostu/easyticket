@@ -5,6 +5,9 @@
 
 <script>
 export default {
-    name: 'IndexView'
+    name: 'IndexView',
+    beforeMount() {
+        this.$router.push({name: "HomeView"})
+    }
 }
 </script>

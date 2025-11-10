@@ -1,6 +1,6 @@
 <template>
     <div class="image-container">
-        <img src="../src/assets/imgs/crowd-1056764_1280.jpg" alt="" />
+        <img src="../src/assets/imgs/crowd-1056764_1280.jpg" class="img-fluid" alt="" />
         <div class="moto">Scopri gli eventi dedicati a te</div>
     </div>
     <EventiView :organizzatoreId=this.organizzatoreId />
