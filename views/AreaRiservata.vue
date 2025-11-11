@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Convalidatore</h5>
-                    <p class="card-text">Verificare e convalida la presenza dei partecipanti</p>
+                    <p class="card-text">Verifica e convalida la presenza dei partecipanti</p>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
@@ -55,8 +55,6 @@
 export default {
     name: "AreaRiservata",
     mounted() {
-        localStorage.setItem("organizzatoreEmail", "")
-        localStorage.setItem("organizzatoreId", "")
     }
 }
 </script>

@@ -1,4 +1,5 @@
 <template>
+    <h2 class="mt-4">Area Organizzatore</h2>
     <div>
         <router-link class="btn btn-primary mt-5" to="/area-riservata/area-organizzatore/aggiungi-evento">Aggiungi un nuovo evento</router-link>
     </div>
@@ -25,17 +26,22 @@
         justify-content: flex-start !important;
         width: 100% !important;
     }
+
+    .logout-button {
+        position: absolute;
+        right: 4%;
+        top: 100px;
+    }
 </style> 
 
 <script>
 
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
 import EventiView from '../eventi/EventiView.vue';
 export default {
     name: "AreaOrganizzatore",
     beforeMount() {
-        if(!localStorage.getItem("organizzatoreId")) {
-            this.$router.push({name: "OrganizzatoreLogin"});
-        }
     },
     mounted() {
         console.log("org id " + localStorage.getItem("organizzatoreId"))
@@ -47,10 +53,13 @@ export default {
     },
     components: {EventiView},
     methods: {
-        logout() {
-            localStorage.setItem("organizzatoreId", "");
-            localStorage.setItem("organizzatoreEmail", "");
-            this.$router.push("/area-riservata");
+        async logout() {
+            try {
+                await signOut(auth)
+                this.$router.push({name: "AreaRiservata"})
+            } catch(error) {
+                console.log(error)
+            }
         }
     }
 }

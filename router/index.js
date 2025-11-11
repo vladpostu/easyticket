@@ -10,6 +10,7 @@ import OrganizzatoreLogin from '../views/area_riservata/OrganizzatoreLogin.vue'
 import OrganizzatoreRegistrati from '../views/area_riservata/OrganizzatoreRegistrati.vue'
 import AggiungiEvento from '../views/area_riservata/AggiungiEvento.vue'
 import AreaConvalidatore from '../views/area_riservata/AreaConvalidatore.vue'
+import { getAuth } from 'firebase/auth'
 
 const routes = [
     {
@@ -47,7 +48,8 @@ const routes = [
     {
         path: "/area-riservata/area-organizzatore",
         name: "AreaOrganizzatore",
-        component: AreaOrganizzatore
+        component: AreaOrganizzatore,
+        meta: { requiresAuth: true }
     },
     {
         path: "/area-riservata/area-organizzatore/eventi-organizzatore",
@@ -79,6 +81,18 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
+})
+
+
+router.beforeEach(async (to, from, next) => {
+    const auth = getAuth();
+    const user = auth.currentUser
+
+    if(to.path.startsWith("/area-riservata/area-organizzatore") && !user) {
+        next("/area-riservata/organizzatore-login")
+    } else {
+        next()
+    }
 })
 
 export default router

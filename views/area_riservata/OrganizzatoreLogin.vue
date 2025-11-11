@@ -1,5 +1,6 @@
 
 <template>
+    <h2 class="mt-5">Login</h2>
     <div class="form-login">
         <div class="input-group">
             <label class="form-label">Email</label>
@@ -21,12 +22,12 @@
     .form-login {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        width: 250px;
         position: relative;
         left: 50%;
         transform: translateX(-50%);
-        top: 100px;
         align-items: center;
+        margin-top: 50px;
     }
 
     .input-group {
@@ -34,7 +35,7 @@
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
-        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .input-group label {
@@ -52,8 +53,9 @@
 </style>
 
 <script>
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
+import { getDoc, doc } from 'firebase/firestore';
+import { db, auth } from '../../firebase/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default {
     name: "OrganizzatoreLogin",
@@ -66,30 +68,21 @@ export default {
     methods: {
         async login() {
             try {
-                const q = query(
-                    collection(db, "organizzatori"),
-                    where("email", "==", this.email),
-                    where("password", "==", this.password)
+                const cred = await signInWithEmailAndPassword(
+                    auth, this.email, this.password
                 )
+                
+                const userDoc = await getDoc(doc(db, "organizzatori", cred.user.uid));
+                console.log(userDoc)
 
-                const snapshot = await getDocs(q);
-
-                if(!snapshot.empty) {
-                    const user = snapshot.docs[0];
-                    localStorage.setItem("organizzatoreId", user.id),
-                    localStorage.setItem("organizzatoreEmail", this.email);
-
-                    this.$router.push("/area-riservata/area-organizzatore");
-            }
+                localStorage.setItem("organizzatoreId", cred.user.uid)
+                this.$router.push({name: "AreaOrganizzatore"})
             } catch (error) {
                 console.log(error);
             }
         }
     },
     mounted() {
-        if(localStorage.getItem("organizzatoreEmail")) {
-            this.$router.push("/area-riservata/area-organizzatore")
-        }
     }
 }
 </script>
