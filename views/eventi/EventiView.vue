@@ -35,7 +35,7 @@
         flex-wrap: wrap;
         gap: 20px;
         align-items: baseline;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .card img {
@@ -61,7 +61,7 @@ export default {
     props: ["organizzatoreId"],
     methods: {
         async fetchEventi() {
-            if (this.organizzatoreId == "") {
+            if (!this.organizzatoreId) {
                 const eventiRef = collection(db, "eventi")
                 const snapshot = await getDocs(eventiRef)
 
