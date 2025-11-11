@@ -1,35 +1,53 @@
 
 <template>
     <div class="form-login">
-        <div>Email</div>
-        <input v-model="email" type="text" placeholder="">
+        <div class="input-group">
+            <label class="form-label">Email</label>
+            <input v-model="email" type="text" placeholder="" id="email_organizzatore" class="form-control">
+        </div>
 
-        <div>Password</div>
-        <input v-model="password" type="text" placeholder="">
+        <div class="input-group">
+            <label class="form-label">Password</label>
+            <input v-model="password" type="text" placeholder="" id="email_organizzatore" class="form-control">
+        </div>
         
-        <button @click="login">Login</button>
+        <button class="btn btn-primary" @click="login">Login</button>
 
-        <div class="registrati-link">Non hai un account? <router-link to="/area-riservata/organizzatore-registrati">Registrati</router-link></div>
+        <div class="registrati-link mt-2">Non hai un account? <router-link to="/area-riservata/organizzatore-registrati">Registrati</router-link></div>
     </div>
 </template>
 
-<style>
+<style scoped>
     .form-login {
         display: flex;
         flex-direction: column;
         width: 300px;
-        align-items: center;
         position: relative;
         left: 50%;
         transform: translateX(-50%);
+        top: 100px;
+        align-items: center;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        margin-top: 20px;
+    }
+
+    .input-group label {
+        margin-left: 10px;
+    }
+
+    .input-group input {
+        width: 100%;
     }
 
     .form-login button {
-        margin-top: 10px;
-    }
-
-    .registrati-link {
-        margin-top: 10px;
+        margin-top: 30px;
+        width: 100px;
     }
 </style>
 

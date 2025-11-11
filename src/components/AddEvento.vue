@@ -18,7 +18,6 @@
             <div class="input-group mb-3">
                 <input type="file" class="form-control" id="inputGroupFile01" placeholder="" @change="onFileChange">
             </div>
-            <button class="btn btn-outline-secondary btn-upload-file" type="button">Upload</button>
         </div>
 
 
