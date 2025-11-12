@@ -31,6 +31,8 @@
   color: #F4F4F4;
   text-align: center;
   padding: 60px 20px;
+  position: relative;
+  bottom: 80px;
 }
 
 h2 {

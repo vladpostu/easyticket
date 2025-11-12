@@ -7,5 +7,6 @@ module.exports = defineConfig({
         assert: false
       }
     }
-  }
+  },
+  publicPath: "/easyticket/",
 })

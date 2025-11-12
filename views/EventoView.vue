@@ -23,8 +23,8 @@
                     <input v-model="data_di_nascita" type="date" placeholder="" id="data_nascita_partecipante"
                         class="form-control">
                 </div>
-                <button @click="aggiungiPartecipante" class="btn btn-primary mt-4">Partecipa</button>
-                <button @click="recuperaBiglietto" class="btn btn-outline-light mt-3 btn-sm">Recupera
+                <button type="button" @click="aggiungiPartecipante" class="btn btn-primary mt-4">Partecipa</button>
+                <button type="button" @click="recuperaBiglietto" class="btn btn-outline-light mt-3 btn-sm">Recupera
                     biglietto</button>
                 <div class="form-text" style="width: 200px;">Se vuoi recuperare il tuo biglietto compila i campi e premi il pulsante "Recupera
                     Biglietto"
@@ -49,7 +49,7 @@
 
 .wrapper {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: center;
   gap: 80px;
   flex-wrap: wrap-reverse;
@@ -230,8 +230,11 @@ export default {
     },
     methods: {
         async aggiungiPartecipante() {
-            const partecipanteRef = collection(db, "eventi", this.eventoId, "partecipanti")
-            var partecipanteId = this.nome + "_" + this.cognome
+            try {
+              const partecipanteRef = collection(db, "eventi", this.eventoId, "partecipanti")
+            let partecipanteId;
+
+            console.log("ci sono")
 
             const docRef = await addDoc(partecipanteRef, {
                 nome: this.nome,
@@ -246,6 +249,8 @@ export default {
             this.cognome = "";
             this.data_di_nascita = "";
 
+            
+
             this.$router.push({
                 name: "PartecipanteView",
                 params: {
@@ -253,6 +258,9 @@ export default {
                     partecipanteId: partecipanteId,
                 }
             })
+            } catch(error) {
+              console.log(error);
+            }
         },
         async recuperaBiglietto() {
 
