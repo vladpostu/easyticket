@@ -177,9 +177,10 @@
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .wrapper {
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 40px;
     padding: 30px 20px;
+    align-items: center;
   }
 
   .evento-dettagli-wrapper img {

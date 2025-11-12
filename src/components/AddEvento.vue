@@ -1,104 +1,194 @@
 <template>
-    <h2 class="mt-5">Aggiungi evento</h2>
-    <div class="form-evento form-group">
-        <div class="form-group">
-            <label for="nome_evento">Nome Evento</label>
-            <input v-model="nome_evento" class="form-control" type="text" placeholder="" id="nome_evento"/>
-        </div>
-        <div class="form-group">
-            <label for="data_evento">Data Evento</label>
-            <input v-model="data" class="form-control" type="date" id="data_evento" placeholder="">
-        </div>
-        <div class="form-group">
-            <label for="password_convalidatori">Password Convalidatori</label>
-            <input v-model="passwordConvalidatori" class="form-control" placeholder="" type="text">
-            <small class="form-text text-muted">La password verrà usata dai tuoi convalidatori</small>
-        </div>
-        <div class="form-group upload-file">
-            <label for="inputGroupFile01">Seleziona un'immagine di copertina</label>
-            <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile01" placeholder="" @change="onFileChange">
-            </div>
-        </div>
+  <div class="area-add-evento">
+    <header>
+      <h2>Aggiungi Evento</h2>
+      <p class="subtitle">Compila i dati per creare un nuovo evento</p>
+    </header>
 
-        <div v-if="aliasEvento" class="alert alert-success mt-3" role="alert">
-            <div>Evento inserito corretamente, alias:</div>
-            <div class="fs-4 fw-bold"> {{ aliasEvento }} </div>
-        </div>
+    <div class="form-container">
+      <div class="form-group">
+        <label for="nome_evento">Nome Evento</label>
+        <input
+          v-model="nome_evento"
+          type="text"
+          id="nome_evento"
+          placeholder="Es. Summer Fest 2025"
+        />
+      </div>
 
-        <button @click="inserisciEvento" type="button" class="btn btn-primary">Inserisci</button>
+      <div class="form-group">
+        <label for="data_evento">Data Evento</label>
+        <input v-model="data" type="date" id="data_evento" />
+      </div>
+
+      <div class="form-group">
+        <label for="password_convalidatori">Password Convalidatori</label>
+        <input
+          v-model="passwordConvalidatori"
+          type="text"
+          id="password_convalidatori"
+          placeholder="Password per i convalidatori"
+        />
+        <small class="form-text">Fornisci questa password ai tuoi convalidatori per l’accesso.</small>
+      </div>
+
+      <div class="form-group upload">
+        <label for="inputGroupFile01">Immagine di copertina</label>
+        <input
+          type="file"
+          id="inputGroupFile01"
+          @change="onFileChange"
+          class="form-control"
+        />
+      </div>
+
+      <div v-if="aliasEvento" class="alert-success">
+        <p>Evento inserito correttamente!</p>
+        <p><strong>Alias generato:</strong> <span>{{ aliasEvento }}</span></p>
+      </div>
+
+      <button class="btn-primary btn-center" @click="inserisciEvento">Inserisci Evento</button>
     </div>
+  </div>
 </template>
 
 <style scoped>
-    .form-evento {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 50px;
-        width: 400px;
-    }
+.area-add-evento {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 0 20px 80px;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #0C2B4E;
+}
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: start;
-        width: 300px;
-    }
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
 
-    .custom-file {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
+h2 {
+  font-weight: 700;
+  color: #0C2B4E;
+  margin-bottom: 10px;
+}
 
-    .form-group label {
-        margin-left: 10px;
-        margin-top: 10px;
-    }
+.subtitle {
+  color: #1D546C;
+  font-weight: 400;
+  font-size: 0.95rem;
+}
 
-    .form-group input {
-        width: 100%;
-    }
+/* --- FORM --- */
+.form-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 5px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .btn {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 40px;
-        font-weight: 700;
-    }
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
 
-    .input-group {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-content: flex-start;
-    }
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0C2B4E;
+}
 
-    .upload-file {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-    }
+.form-group input[type="text"],
+.form-group input[type="date"] {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
 
-    .btn-upload-file {
-        align-self: flex-start;
-        transform: none;
-        left: auto;
-        margin: -5px 0 0 2px;
-        font-size: 0.90em;
-        border: none;
-    }
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus {
+  outline: none;
+  border-color: #0C2B4E;
+  box-shadow: 0 0 4px rgba(12, 43, 78, 0.25);
+}
 
+/* --- FILE INPUT STYLING --- */
+.form-group input[type="file"] {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-group input[type="file"]:hover {
+  border-color: #0C2B4E;
+  background-color: #f0f0f0;
+}
+
+/* --- ALERT --- */
+.alert-success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+  border-radius: 8px;
+  padding: 15px 18px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.alert-success span {
+  display: block;
+  font-weight: 700;
+  color: #0c2b4e;
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+/* --- BUTTON --- */
+.btn-primary {
+  background-color: #0C2B4E;
+  border: none;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #174170;
+}
+
+/* --- CENTRATO --- */
+.btn-center {
+  display: block;
+  margin: 30px auto 0 auto;
+  width: 50%;
+  text-align: center;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 500px) {
+  .form-container {
+    padding: 25px 20px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
 </style>
+
+
 
 <script>
 import { collection, addDoc } from 'firebase/firestore';
