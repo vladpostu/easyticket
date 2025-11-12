@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import IndexView from '../views/IndexView.vue'
 import HomePage from '../views/HomePage.vue'

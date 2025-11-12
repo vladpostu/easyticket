@@ -1,12 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  configureWebpack: {
-    resolve: {
-      fallback: {
-        assert: false
-      }
-    }
-  },
-  publicPath: "/easyticket/",
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/easyticket/'
+    : '/',
 })

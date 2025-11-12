@@ -1,47 +1,154 @@
 <template>
-    <h2 class="mt-5">Registrati</h2>
-    <div class="form-login">
-        <div class="input-group">
-            <label class="form-label">Email</label>
-            <input class="form-control" v-model="email" type="text" placeholder="">
-        </div>
-        <div class="input-group">
-            <label class="form-label">Password</label>
-            <input class="form-control" v-model="password" type="text" placeholder="">
-        </div>        
-        <button class="btn btn-primary mt-4" @click="addOrganizzatore">Crea Account</button>
-        <small class="mt-2">I tuoi dati sono al sicuro grazie alla crittografia Google</small>
+  <div class="area-organizzatore">
+    <header>
+      <h2>Registrati</h2>
+      <p class="subtitle">Crea il tuo account organizzatore</p>
+    </header>
+
+    <div class="form-container">
+      <div class="form-group">
+        <label for="email_organizzatore">Email</label>
+        <input
+          v-model="email"
+          type="email"
+          id="email_organizzatore"
+          placeholder="Inserisci la tua email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password_organizzatore">Password</label>
+        <input
+          v-model="password"
+          type="password"
+          id="password_organizzatore"
+          placeholder="Inserisci la tua password"
+        />
+      </div>
+
+      <button class="btn-primary" @click="addOrganizzatore">Crea Account</button>
+
+      <div class="registrati-link">
+        Hai già un account?
+        <router-link to="/area-riservata/organizzatore-login">Accedi</router-link>
+      </div>
     </div>
+  </div>
 </template>
 
-<style>
-    .form-login{
-        width: 250px;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 50px;
-    }
+<style scoped>
+.area-organizzatore {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 0 20px 80px;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #0C2B4E;
+}
 
-    .input-group {
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 10px;
-    }
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
 
-    .input-group input {
-        width: 100% !important;
-    }
+h2 {
+  font-weight: 700;
+  color: #0C2B4E;
+  margin-bottom: 10px;
+}
 
-    button {
-        width: 150px !important;
-    }
+.subtitle {
+  color: #1D546C;
+  font-weight: 400;
+  font-size: 0.95rem;
+}
 
+/* --- FORM --- */
+.form-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 5px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0C2B4E;
+}
+
+.form-group input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #0C2B4E;
+  box-shadow: 0 0 4px rgba(12, 43, 78, 0.25);
+}
+
+/* --- BUTTON --- */
+.btn-primary {
+  background-color: #0C2B4E;
+  border: none;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btn-primary:hover {
+  background-color: #174170;
+}
+
+/* --- LINK --- */
+.registrati-link {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.registrati-link a {
+  color: #0C2B4E;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.registrati-link a:hover {
+  text-decoration: underline;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 500px) {
+  .form-container {
+    padding: 25px 20px;
+  }
+
+  .btn-primary {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
 </style>
+
+
 
 <script>
 import {doc, setDoc } from 'firebase/firestore';
