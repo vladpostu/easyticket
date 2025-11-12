@@ -6,8 +6,8 @@
 <script>
 export default {
     name: 'IndexView',
-    beforeMount() {
-        this.$router.push({name: "HomeView"})
+    beforeRouteEnter(to, from, next) {
+        next({name: "HomeView"})
     }
 }
 </script>

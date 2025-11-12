@@ -1,38 +1,149 @@
 <template>
-    <h2 class="mt-4">Area Organizzatore</h2>
-    <h5 class="mt-4"><span style="font-weight: 300;">Ciao,</span> {{  currentUser.email }}</h5>
-    <button class="btn btn-outline-danger btn-sm logout-button mt-1" @click="logout">Esci</button>
-    <div>
-        <router-link class="btn btn-primary mt-5" to="/area-riservata/area-organizzatore/aggiungi-evento">Aggiungi un nuovo evento</router-link>
-    </div>
-    <div class="eventi-org">
-        <div class="ms-2 fw-bold">I tuoi eventi</div>
-        <EventiView class="eventi-comp" :organizzatoreId="organizzatoreIdRecuperato"/>
-    </div>
+  <div class="area-organizzatore">
+    <header class="header">
+      <div class="intestazione">
+        <h2>Area Organizzatore</h2>
+        <h5><span class="light">Ciao,</span> {{ currentUser.email }}</h5>
+      </div>
+      <button class="logout-button" @click="logout">Esci</button>
+    </header>
+
+    <main class="contenuto">
+      <router-link
+        class="btn btn-primary"
+        to="/area-riservata/area-organizzatore/aggiungi-evento"
+      >
+        + Aggiungi un nuovo evento
+      </router-link>
+
+      <section class="eventi-org">
+        <h6 class="fw-bold">I tuoi eventi</h6>
+        <EventiView class="eventi-comp" :organizzatoreId="organizzatoreIdRecuperato" />
+      </section>
+    </main>
+  </div>
 </template>
 
 <style scoped>
-    .eventi-org {
-        margin-top: 50px;
-        display: flex;
-        flex-direction: column;
-        width: 90%;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        justify-content: flex-start;
-        align-items: start;
-    }
+.area-organizzatore {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 80px 20px;
+  color: #0C2B4E;
+  font-family: "Inter", system-ui, sans-serif;
+}
 
-    .eventi-comp {
-        justify-content: flex-start !important;
-        width: 100% !important;
-    }
+/* --- Header --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
 
-    .logout-button {
-        width: 80px !important;
-    }
-</style> 
+.intestazione {
+  text-align: left;
+}
+
+h2 {
+  font-weight: 700;
+  color: #0C2B4E;
+  margin-bottom: 5px;
+}
+
+h5 {
+  font-weight: 400;
+  color: #1D546C;
+  margin: 0;
+}
+
+.light {
+  font-weight: 300;
+}
+
+/* --- Logout button --- */
+.logout-button {
+  border: 2px solid #dc3545;
+  background-color: transparent;
+  color: #dc3545;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* --- Main Content --- */
+.contenuto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+/* --- Button Primary --- */
+.btn-primary {
+  background-color: #0C2B4E;
+  border: none;
+  padding: 12px 28px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: #174170;
+}
+
+/* --- Eventi --- */
+.eventi-org {
+  width: 100%;
+  background: #f8fafc;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.eventi-org .fw-bold {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #0C2B4E;
+}
+
+.eventi-comp {
+  width: 100%;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logout-button {
+    align-self: flex-start;
+  }
+
+  .contenuto {
+    gap: 30px;
+  }
+
+  .eventi-org {
+    padding: 20px;
+  }
+}
+</style>
+
 
 <script>
 

@@ -76,6 +76,12 @@ const routes = [
         path: "/area-riservata/area-convalidatore",
         name: "AreaConvalidatore",
         component: AreaConvalidatore
+    },
+    {
+        path: "/area-riservata/area-organizzatore/evento/:eventoId",
+        name: "EventoOrganizzatore",
+        component: () => import("../views/area_riservata/EventoOrganizzatore.vue"),
+        props: true
     }
 ]
 

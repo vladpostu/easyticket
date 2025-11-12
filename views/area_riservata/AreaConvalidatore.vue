@@ -1,83 +1,232 @@
 <template>
-    <h2 class="mt-4">Area Convalidatore</h2>
-    <div class="form mt-5" v-if="!isLogged">
-        <div class="input-group">
-            <label for="alias_evenato">Alias Evento</label>
-            <input v-model="evento" type="text" placeholder="" id="alias_evento" class="form-control"/>
-        </div>
-        <div class="input-group">
-            <label for="password_evento">Password</label>
-            <input v-model="password" type="text" placeholder="" id="password_evento" class="form-control"/>
-        </div>
-        <div class="form-text">Le credenziali devono essere fornite dall'organizzatore</div>
-        <button class="btn btn-primary mt-4" @click="convalidatoreLogin">Login</button>
+  <div class="area-convalidatore">
+    <header>
+      <h2>Area Convalidatore</h2>
+      <p class="subtitle" v-if="!isLogged">Accedi per convalidare i partecipanti all’evento</p>
+    </header>
+
+    <!-- LOGIN FORM -->
+    <div v-if="!isLogged" class="form-container">
+      <div class="form-group">
+        <label for="alias_evento">Alias Evento</label>
+        <input
+          v-model="evento"
+          type="text"
+          id="alias_evento"
+          placeholder=""
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password_evento">Password</label>
+        <input
+          v-model="password"
+          type="password"
+          id="password_evento"
+          placeholder=""
+        />
+      </div>
+
+      <small class="form-text">Le credenziali vengono fornite dall'organizzatore.</small>
+
+      <button class="btn-primary" @click="convalidatoreLogin">Accedi</button>
     </div>
-    <div v-if="isLogged">
-         <ApriFotocamera @emitQRCode="gestisciQR"/>
-        <div v-if="idPartecipante" class="partecipante mt-5">
-            <div class="bold">Dettagli Partecipante</div>
-            <div class="big"> {{ datiPartecipante.nome }} {{ datiPartecipante.cognome }}</div>
-            <div class="big"> {{ datiPartecipante.dataNascita }} </div>
-        <div>
+
+    <!-- SEZIONE CONVALIDA -->
+    <div v-else class="scanner-section">
+      <ApriFotocamera @emitQRCode="gestisciQR" />
+
+      <div v-if="idPartecipante" class="partecipante">
+        <h4>Dettagli Partecipante</h4>
+        <div class="info">
+          <div><strong>Nome:</strong> {{ datiPartecipante.nome }}</div>
+          <div><strong>Cognome:</strong> {{ datiPartecipante.cognome }}</div>
+          <div><strong>Data di nascita:</strong> {{ datiPartecipante.dataNascita }}</div>
         </div>
-        <div v-if="idPartecipante" class="conferma_partecipante mt-5">
-            <div v-if="!datiPartecipante.presenzaConfermata">I dati sono corretti?</div>
-            <div v-if="datiPartecipante.presenzaConfermata" class="alert alert-warning" role="alert">Presenza già confermata</div>
-            <div v-else class="conferma-buttons">
-                <button @click="confermaPartecipazione">Conferma</button>
-            </div>
+
+        <div class="conferma">
+          <div v-if="datiPartecipante.presenzaConfermata" class="alert alert-warning">
+            Presenza già confermata
+          </div>
+
+          <div v-else>
+            <p>I dati sono corretti?</p>
+            <button class="btn-confirm" @click="confermaPartecipazione">Conferma Presenza</button>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <style scoped>
-    .form {
-        display: flex;
-        flex-direction: column;
-        width: 250px;
-        align-items: center;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+.area-convalidatore {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 0 20px 80px;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #0C2B4E;
+}
 
-    .conferma-partecipante {
-        margin-top: 50px;
-    }
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
 
-    .conferma-buttons {
-        margin-top: 50px;
-    }
+h2 {
+  font-weight: 700;
+  color: #0C2B4E;
+  margin-bottom: 10px;
+}
 
-    .conferma-buttons > button {
-        margin: 10px;
-    }
+.subtitle {
+  color: #1D546C;
+  font-weight: 400;
+  font-size: 0.95rem;
+}
 
-    .input-group label {
-        margin-left: 5px;
-    }
+/* --- FORM --- */
+.form-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 5px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .form-text {
-        text-wrap: nowrap;
-    }
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
 
-    .partecipante {
-        width: 500px;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0C2B4E;
+}
 
-    .bold {
-        font-weight: 700;
-    }
+.form-group input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
 
-    .big {
-        font-size: 1.5em;
-    }
+.form-group input:focus {
+  outline: none;
+  border-color: #0C2B4E;
+  box-shadow: 0 0 4px rgba(12, 43, 78, 0.25);
+}
 
+.form-text {
+  font-size: 0.85rem;
+  color: #6c757d;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #0C2B4E;
+  border: none;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btn-primary:hover {
+  background-color: #174170;
+}
+
+/* --- SEZIONE SCANNER --- */
+.scanner-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* --- PARTECIPANTE --- */
+.partecipante {
+  background-color: #1D546C;
+  color: #F4F4F4;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 8px 20px;
+}
+
+.partecipante h4 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+.info div {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.conferma {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.btn-confirm {
+  background-color: #28a745;
+  border: none;
+  padding: 10px 22px;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-confirm:hover {
+  background-color: #218838;
+}
+
+/* --- ALERT --- */
+.alert {
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 500px) {
+  .form-container {
+    padding: 25px 20px;
+  }
+
+  .partecipante {
+    padding: 20px;
+  }
+
+  .btn-confirm,
+  .btn-primary {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
 </style>
+
 
 <script>
 import { db } from '../../firebase/firebase';

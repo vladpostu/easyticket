@@ -1,4 +1,5 @@
 <template>
+    <h2 class="mt-5">Aggiungi evento</h2>
     <div class="form-evento form-group">
         <div class="form-group">
             <label for="nome_evento">Nome Evento</label>
@@ -20,7 +21,10 @@
             </div>
         </div>
 
-
+        <div v-if="aliasEvento" class="alert alert-success mt-3" role="alert">
+            <div>Evento inserito corretamente, alias:</div>
+            <div class="fs-4 fw-bold"> {{ aliasEvento }} </div>
+        </div>
 
         <button @click="inserisciEvento" type="button" class="btn btn-primary">Inserisci</button>
     </div>
@@ -140,6 +144,7 @@ export default {
 
             try {
                 await addDoc(collection(db, 'eventi'), nuovoEvento)
+                this.aliasEvento = nuovoEvento.aliasEvento
                 this.data = ''
                 this.nome_evento = ''
                 this.$emit('eventoInserito')
