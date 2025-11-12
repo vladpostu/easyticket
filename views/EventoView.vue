@@ -5,7 +5,7 @@
                 <img :src="imgCopertinaURL" alt="">
                 <div>
                     <h1 class="mt-3"> {{ evento.nome_evento }}</h1>
-                    <h5> {{ evento.data }} </h5>
+                    <h5> {{ invertiData(evento.data )}} </h5>
                 </div>
             </div>
             <form class="partecipante-form">
@@ -201,6 +201,7 @@
 <script>
 import { getDoc, doc, addDoc, collection, query, where, getDocs } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
+import { invertiData } from '@/utils/dateUtils';
 
 export default {
     name: "EventoView",
@@ -229,6 +230,7 @@ export default {
         }
     },
     methods: {
+        invertiData,
         async aggiungiPartecipante() {
             try {
               const partecipanteRef = collection(db, "eventi", this.eventoId, "partecipanti")

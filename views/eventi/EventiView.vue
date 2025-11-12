@@ -5,7 +5,7 @@
             <img :src="evento.imgCopertina" class="card-img-top" alt="">
             <div class="card-body">
                 <h5 class="card-title">{{ evento.nome_evento }}</h5>
-                <p>{{ evento.data }}</p>
+                <p>{{ invertiData(evento.data) }}</p>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card’s content.</p>
             </div>
@@ -97,6 +97,7 @@ a {
 <script>
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
+import { invertiData } from '@/utils/dateUtils';
 
 export default {
     name: "EventiView",
@@ -107,6 +108,7 @@ export default {
     },
     props: ["organizzatoreId"],
     methods: {
+        invertiData,
         async fetchEventi() {
             if (!this.organizzatoreId) {
                 const eventiRef = collection(db, "eventi")

@@ -5,7 +5,7 @@
             {{ evento.nome_evento }}
         </div>
         <div class="evento-nome">
-            {{ evento.data }}
+            {{ invertiData(evento.data) }}
         </div>
     </div>
 </template>
@@ -13,6 +13,7 @@
 <script>
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
+import { invertiData } from '@/utils/dateUtils';
 
 export default {
     name: "EventiOrganizzatore",
@@ -22,6 +23,7 @@ export default {
         }
     },
     methods: {
+        invertiData,
         async caricaEventi() {
             const q = query(
                 collection(db, "eventi"),
