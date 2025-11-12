@@ -1,24 +1,28 @@
 <template>
-    <div class="form" v-if="!isLogged">
-        {{ isLogged }}
-
-        <input v-model="evento" type="text" placeholder="Evento">
-        <input v-model="password" type="text" placeholder="password">
-        <button @click="convalidatoreLogin">login</button>
-    </div>
-    <ApriFotocamera @emitQRCode="gestisciQR"/>
-    <div v-if="isLogged">
-        <div v-if="idPartecipante">
-            <div>Dettagli Partecipante</div>
-        <div>
-            <div>{{ idPartecipante }}</div>
-            <div> {{ datiPartecipante.nome }} </div>
-            <div> {{ datiPartecipante.cognome }} </div>
-            <div> {{ datiPartecipante.dataNascita }} </div>
+    <h2 class="mt-4">Area Convalidatore</h2>
+    <div class="form mt-5" v-if="!isLogged">
+        <div class="input-group">
+            <label for="alias_evenato">Alias Evento</label>
+            <input v-model="evento" type="text" placeholder="" id="alias_evento" class="form-control"/>
         </div>
-        <div v-if="idPartecipante" class="conferma_partecipante">
-            <div>I dati sono corretti?</div>
-            <div v-if="datiPartecipante.presenzaConfermata">Presenza già confermata</div>
+        <div class="input-group">
+            <label for="password_evento">Password</label>
+            <input v-model="password" type="text" placeholder="" id="password_evento" class="form-control"/>
+        </div>
+        <div class="form-text">Le credenziali devono essere fornite dall'organizzatore</div>
+        <button class="btn btn-primary mt-4" @click="convalidatoreLogin">Login</button>
+    </div>
+    <div v-if="isLogged">
+         <ApriFotocamera @emitQRCode="gestisciQR"/>
+        <div v-if="idPartecipante" class="partecipante mt-5">
+            <div class="bold">Dettagli Partecipante</div>
+            <div class="big"> {{ datiPartecipante.nome }} {{ datiPartecipante.cognome }}</div>
+            <div class="big"> {{ datiPartecipante.dataNascita }} </div>
+        <div>
+        </div>
+        <div v-if="idPartecipante" class="conferma_partecipante mt-5">
+            <div v-if="!datiPartecipante.presenzaConfermata">I dati sono corretti?</div>
+            <div v-if="datiPartecipante.presenzaConfermata" class="alert alert-warning" role="alert">Presenza già confermata</div>
             <div v-else class="conferma-buttons">
                 <button @click="confermaPartecipazione">Conferma</button>
             </div>
@@ -27,11 +31,11 @@
     </div>
 </template>
 
-<style>
+<style scoped>
     .form {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        width: 250px;
         align-items: center;
         position: relative;
         left: 50%;
@@ -48,6 +52,29 @@
 
     .conferma-buttons > button {
         margin: 10px;
+    }
+
+    .input-group label {
+        margin-left: 5px;
+    }
+
+    .form-text {
+        text-wrap: nowrap;
+    }
+
+    .partecipante {
+        width: 500px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .bold {
+        font-weight: 700;
+    }
+
+    .big {
+        font-size: 1.5em;
     }
 
 </style>
@@ -80,9 +107,7 @@ export default {
     },
  
     beforeMount() {
-        if(localStorage.getItem("convalidatoreLogged")) {
-            this.isLogged = true;
-        }
+        this.isLogged = false;
     },
     methods: {
         async convalidatoreLogin() {

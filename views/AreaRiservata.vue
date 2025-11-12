@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Convalidatore</h5>
                     <p class="card-text">Verifica e convalida la presenza dei partecipanti</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <router-link :to="{name: 'AreaConvalidatore'}" class="btn btn-primary">Accedi</router-link> 
                 </div>
             </div>
         </div>

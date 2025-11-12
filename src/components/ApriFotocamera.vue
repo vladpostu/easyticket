@@ -1,13 +1,20 @@
 <template>
-    <button @click="apriFotocamera">Scannerizza QR Code</button>
-    <div>
+    <button class="btn btn-primary btn-qr" @click="apriFotocamera">Scannerizza QR Code</button>
+    <div class="mt-4">
         <video v-if="scanning" ref="video" autoplay playsinline=""></video>
-    <canvas style="display: none;" ref="canvas"></canvas>
-    <div v-if="qrContent">
-        {{  qrContent  }}
-    </div>
+        <canvas style="display: none;" ref="canvas"></canvas>
+        <div v-if="qrContent">
+            {{  qrContent  }}
+        </div>
     </div>
 </template>
+
+<style>
+    .btn-qr {
+        margin-top: 30px;
+        width: 200px !important;
+    }
+</style>
 
 <script>
 import jsQR from 'jsqr';

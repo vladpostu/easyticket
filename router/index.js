@@ -11,6 +11,7 @@ import OrganizzatoreRegistrati from '../views/area_riservata/OrganizzatoreRegist
 import AggiungiEvento from '../views/area_riservata/AggiungiEvento.vue'
 import AreaConvalidatore from '../views/area_riservata/AreaConvalidatore.vue'
 import { getAuth } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const routes = [
     {
@@ -84,12 +85,28 @@ const router = createRouter({
 })
 
 
+function getCurrentUser() {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      getAuth(),
+      user => {
+        unsubscribe()
+        resolve(user)
+      },
+      reject
+    )
+  })
+}
+
 router.beforeEach(async (to, from, next) => {
-    const auth = getAuth();
-    const user = auth.currentUser
+    //const auth = getAuth();
+    const user = await getCurrentUser()
 
     if(to.path.startsWith("/area-riservata/area-organizzatore") && !user) {
         next("/area-riservata/organizzatore-login")
+    } 
+    else if(to.path.startsWith("/area-riservata/organizzatore-login") && user) {
+        next("/home")
     } else {
         next()
     }

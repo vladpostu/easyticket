@@ -1,5 +1,7 @@
 <template>
     <h2 class="mt-4">Area Organizzatore</h2>
+    <h5 class="mt-4"><span style="font-weight: 300;">Ciao,</span> {{  currentUser.email }}</h5>
+    <button class="btn btn-outline-danger btn-sm logout-button mt-1" @click="logout">Esci</button>
     <div>
         <router-link class="btn btn-primary mt-5" to="/area-riservata/area-organizzatore/aggiungi-evento">Aggiungi un nuovo evento</router-link>
     </div>
@@ -28,9 +30,7 @@
     }
 
     .logout-button {
-        position: absolute;
-        right: 4%;
-        top: 100px;
+        width: 80px !important;
     }
 </style> 
 
@@ -49,6 +49,7 @@ export default {
     data() {
         return {
             organizzatoreIdRecuperato: localStorage.getItem("organizzatoreId"),
+            currentUser: auth.currentUser
         }
     },
     components: {EventiView},
