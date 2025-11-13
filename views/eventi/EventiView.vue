@@ -1,18 +1,30 @@
 <template>
-    <div class="eventi">
-        <router-link :to='getLinkView(evento)' v-for="evento in eventi"
-            :key="evento.id" class="card" style="width: 18rem;">
-            <img :src="evento.imgCopertina" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">{{ evento.nome_evento }}</h5>
-                <p>{{ invertiData(evento.data) }}</p>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card’s content.</p>
-            </div>
-        </router-link>
-    </div>
+  <div v-if="loaded" class="eventi">
+    <router-link
+      :to="getLinkView(evento)"
+      v-for="evento in eventi"
+      :key="evento.id"
+      class="card"
+      style="width: 18rem;"
+    >
+      <img :src="evento.imgCopertina" class="card-img-top" alt="">
+      <div class="card-body">
+        <h5 class="card-title">{{ evento.nome_evento }}</h5>
+        <p>{{ invertiData(evento.data) }}</p>
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the bulk of the card’s content.
+        </p>
+      </div>
+    </router-link>
+  </div>
+
+  <!-- Spinner di caricamento -->
+  <div v-else class="loader-container">
+    <div class="spinner"></div>
+  </div>
 </template>
-<style scoped>
+
+<style>
 .eventi {
   width: 90%;
   max-width: 1200px;
@@ -21,6 +33,30 @@
   flex-wrap: wrap;
   gap: 25px;
   justify-content: center;
+}
+
+/* SPINNER LOADER */
+.loader-container {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 55px;
+  height: 55px;
+  border: 5px solid #e3e8ef;
+  border-top-color: #1B3B69; /* Colore coerente con card-title */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* CARD */
@@ -43,6 +79,7 @@
 .card img {
   height: 180px;
   width: 100%;
+  aspect-ratio: 4/3;
   object-fit: cover;
 }
 
@@ -72,7 +109,7 @@
 
 /* LINK */
 a {
-  text-decoration: none;
+  text-decoration: none !important;
   color: inherit;
 }
 
@@ -91,8 +128,8 @@ a {
     height: 200px;
   }
 }
-</style>
 
+</style>
 
 <script>
 import { collection, getDocs, query, where } from 'firebase/firestore';
@@ -103,7 +140,8 @@ export default {
     name: "EventiView",
     data() {
         return {
-            eventi: []
+            eventi: [],
+            loaded: false,
         }
     },
     props: ["organizzatoreId"],
@@ -118,6 +156,8 @@ export default {
                     id: evento.id,
                     ...evento.data()
                 }))
+
+                this.loaded = true;
             } else {
                 const q = query(collection(db, "eventi"),
                     where("idOrganizzatore", "==", this.organizzatoreId)
