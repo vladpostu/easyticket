@@ -1,18 +1,18 @@
 <template>
     <div class="wrapper">
-        <h2 class="mt-5">Area riservata</h2>
+        <h2 class="mt-5">{{ $t("reservedArea") }}</h2>
         <div class="opzioni">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Organizzatore</h5>
-                    <p class="card-text">Crea, gestisci e verifica i tuoi eventi</p>
-                    <router-link :to="{name: 'AreaOrganizzatore'}" class="btn btn-primary">Accedi</router-link>
+                    <h5 class="card-title">{{ $t("organizer") }}</h5>
+                    <p class="card-text">{{ $t("organizerText") }}</p>
+                    <router-link :to="{name: 'AreaOrganizzatore'}" class="btn btn-primary">{{$t("loginButton")}}</router-link>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Convalidatore</h5>
-                    <p class="card-text">Verifica e convalida la presenza dei partecipanti</p>
+                    <h5 class="card-title">{{ $t("validator") }}</h5>
+                    <p class="card-text">{{ $t("validatorText") }}</p>
                     <router-link :to="{name: 'AreaConvalidatore'}" class="btn btn-primary">Accedi</router-link> 
                 </div>
             </div>

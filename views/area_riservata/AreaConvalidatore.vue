@@ -1,14 +1,14 @@
 <template>
   <div class="area-convalidatore">
     <header>
-      <h2>Area Convalidatore</h2>
-      <p class="subtitle" v-if="!isLogged">Accedi per convalidare i partecipanti all’evento</p>
+      <h2>{{ $t("validatorArea") }}</h2>
+      <p class="subtitle" v-if="!isLogged">{{ $t("validatorAreaText") }}</p>
     </header>
 
     <!-- LOGIN FORM -->
     <div v-if="!isLogged" class="form-container">
       <div class="form-group">
-        <label for="alias_evento">Alias Evento</label>
+        <label for="alias_evento">{{ $t("aliasEvent") }}</label>
         <input
           v-model="evento"
           type="text"
@@ -18,7 +18,7 @@
       </div>
 
       <div class="form-group">
-        <label for="password_evento">Password</label>
+        <label for="password_evento">{{ $t("password") }}</label>
         <input
           v-model="password"
           type="password"
@@ -27,9 +27,9 @@
         />
       </div>
 
-      <small class="form-text">Le credenziali vengono fornite dall'organizzatore.</small>
+      <small class="form-text">{{ $t("credentialsFromOrganizer") }}</small>
 
-      <button class="btn-primary" @click="convalidatoreLogin">Accedi</button>
+      <button class="btn-primary" @click="convalidatoreLogin">{{ $t("loginButton") }}</button>
     </div>
 
     <!-- SEZIONE CONVALIDA -->
@@ -37,21 +37,21 @@
       <ApriFotocamera @emitQRCode="gestisciQR" />
 
       <div v-if="idPartecipante" class="partecipante">
-        <h4>Dettagli Partecipante</h4>
+        <h4>{{ $t("infoParticipant") }}</h4>
         <div class="info">
-          <div><strong>Nome:</strong> {{ datiPartecipante.nome }}</div>
-          <div><strong>Cognome:</strong> {{ datiPartecipante.cognome }}</div>
-          <div><strong>Data di nascita:</strong> {{ datiPartecipante.dataNascita }}</div>
+          <div><strong>{{ $t("name") }}:</strong> {{ datiPartecipante.nome }}</div>
+          <div><strong>{{$t("surname")}}:</strong> {{ datiPartecipante.cognome }}</div>
+          <div><strong>{{$t("dateOfBirth")}}:</strong> {{ datiPartecipante.dataNascita }}</div>
         </div>
 
         <div class="conferma">
           <div v-if="datiPartecipante.presenzaConfermata" class="alert alert-warning">
-            Presenza già confermata
+            {{ $t("alreadyConfirmed") }}
           </div>
 
           <div v-else>
-            <p>I dati sono corretti?</p>
-            <button class="btn-confirm" @click="confermaPartecipazione">Conferma Presenza</button>
+            <p>{{ $t("dataIsCorrectMessage") }}</p>
+            <button class="btn-confirm" @click="confermaPartecipazione">{{ $t("confirmPresence") }}</button>
           </div>
         </div>
       </div>

@@ -1,37 +1,37 @@
 <template>
   <div class="area-organizzatore">
     <header>
-      <h2>Registrati</h2>
-      <p class="subtitle">Crea il tuo account organizzatore</p>
+      <h2>{{ $t("register") }}</h2>
+      <p class="subtitle">{{ $t("organizerRegisterText") }}</p>
     </header>
 
     <div class="form-container">
       <div class="form-group">
-        <label for="email_organizzatore">Email</label>
+        <label for="email_organizzatore">{{ $t("email") }}</label>
         <input
           v-model="email"
           type="email"
           id="email_organizzatore"
-          placeholder="Inserisci la tua email"
+          placeholder=""
         />
       </div>
 
       
       <div class="form-group">
-        <label for="password_organizzatore">Password</label>
+        <label for="password_organizzatore">${{ $t("password") }}</label>
         <input
           v-model="password"
           type="password"
           id="password_organizzatore"
-          placeholder="Inserisci la tua password"
+          placeholder=""
         />
       </div>
 
       <button class="btn-primary" @click="addOrganizzatore">Crea Account</button>
 
       <div class="registrati-link">
-        Hai già un account?
-        <router-link to="/area-riservata/organizzatore-login">Accedi</router-link>
+        {{ $t("alreadyHaveAccount") }}
+        <router-link to="/area-riservata/organizzatore-login">{{ $t("loginButton") }}</router-link>
       </div>
     </div>
   </div>

@@ -2,13 +2,13 @@
 <template>
   <div class="area-organizzatore">
     <header>
-      <h2>Accesso Organizzatore</h2>
-      <p class="subtitle">Accedi per gestire i tuoi eventi</p>
+      <h2>{{ $t("organizerAccess") }}</h2>
+      <p class="subtitle">{{ $t("organizerAccessText") }}</p>
     </header>
 
     <div class="form-container">
       <div class="form-group">
-        <label for="email_organizzatore">Email</label>
+        <label for="email_organizzatore">{{$t("email")}}</label>
         <input
           v-model="email"
           type="email"
@@ -18,7 +18,7 @@
       </div>
 
       <div class="form-group">
-        <label for="password_organizzatore">Password</label>
+        <label for="password_organizzatore">{{ $t("password") }}</label>
         <input
           v-model="password"
           type="password"
@@ -27,11 +27,11 @@
         />
       </div>
 
-      <button class="btn-primary" @click="login">Accedi</button>
+      <button class="btn-primary" @click="login">{{$t("loginButton")}}</button>
 
       <div class="registrati-link">
-        Non hai un account?
-        <router-link to="/area-riservata/organizzatore-registrati">Registrati</router-link>
+        {{ $t("dontHaveAccount") }}
+        <router-link to="/area-riservata/organizzatore-registrati">{{ $t("register") }}</router-link>
       </div>
     </div>
   </div>

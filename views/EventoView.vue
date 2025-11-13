@@ -9,25 +9,23 @@
                 </div>
             </div>
             <form class="partecipante-form">
-                <h4 class="mb-4">Registrati all'evento</h4>
+                <h4 class="mb-4">{{ $t("registerParticipantAtEvent") }}</h4>
                 <div class="mb-3">
-                    <label for="nome_partecipante" class="form-label">Nome</label>
+                    <label for="nome_partecipante" class="form-label">{{ $t("name") }}</label>
                     <input v-model="nome" type="text" placeholder="" class="form-control" id="nome_partecipante" />
                 </div>
                 <div class="mb-3">
-                    <label for="cognome_partecipante" class="form-label">Cognome</label>
+                    <label for="cognome_partecipante" class="form-label">{{ $t("surname") }}</label>
                     <input v-model="cognome" type="text" placeholder="" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="data_nascita_partecipante" class="form-label">Data di nascita </label>
+                    <label for="data_nascita_partecipante" class="form-label">{{ $t("dateOfBirth") }} </label>
                     <input v-model="data_di_nascita" type="date" placeholder="" id="data_nascita_partecipante"
                         class="form-control">
                 </div>
-                <button type="button" @click="aggiungiPartecipante" class="btn btn-primary mt-4">Partecipa</button>
-                <button type="button" @click="recuperaBiglietto" class="btn btn-outline-light mt-3 btn-sm">Recupera
-                    biglietto</button>
-                <div class="form-text" style="width: 200px;">Se vuoi recuperare il tuo biglietto compila i campi e premi il pulsante "Recupera
-                    Biglietto"
+                <button type="button" @click="aggiungiPartecipante" class="btn btn-primary mt-4">{{$t("joinButton")}}</button>
+                <button type="button" @click="recuperaBiglietto" class="btn btn-outline-light mt-3 btn-sm">{{ $t("recoverTicketButton") }}</button>
+                <div class="form-text" style="width: 200px;">{{ $t("recoverTicketMessage") }}
                 </div>
             </form>
         </div>

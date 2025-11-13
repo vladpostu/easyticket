@@ -2,8 +2,8 @@
   <div class="area-organizzatore">
     <header class="header">
       <div class="intestazione">
-        <h2>Area Organizzatore</h2>
-        <h5><span class="light">Ciao,</span> {{ currentUser.email }}</h5>
+        <h2>{{ $t("organizerArea") }}</h2>
+        <h5><span class="light">{{ $t("hiMessage") }},</span> {{ currentUser.email }}</h5>
       </div>
       <button class="logout-button" @click="logout">Esci</button>
     </header>
@@ -13,11 +13,11 @@
         class="btn btn-primary"
         to="/area-riservata/area-organizzatore/aggiungi-evento"
       >
-        + Aggiungi un nuovo evento
+        + {{ $t("addNewEvent") }}
       </router-link>
 
       <section class="eventi-org">
-        <h6 class="fw-bold">I tuoi eventi</h6>
+        <h6 class="fw-bold">{{ $t("yourEvents") }}</h6>
         <EventiView class="eventi-comp" :organizzatoreId="organizzatoreIdRecuperato" />
       </section>
     </main>

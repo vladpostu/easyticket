@@ -1,39 +1,39 @@
 <template>
   <div class="area-add-evento">
     <header>
-      <h2>Aggiungi Evento</h2>
-      <p class="subtitle">Compila i dati per creare un nuovo evento</p>
+      <h2>{{ $t("addEvent") }}</h2>
+      <p class="subtitle">{{ $t("addEventText") }}</p>
     </header>
 
     <div class="form-container">
       <div class="form-group">
-        <label for="nome_evento">Nome Evento</label>
+        <label for="nome_evento">{{ $t("nameEvent") }}</label>
         <input
           v-model="nome_evento"
           type="text"
           id="nome_evento"
-          placeholder="Es. Summer Fest 2025"
+          placeholder="Summer Fest 2025"
         />
       </div>
 
       <div class="form-group">
-        <label for="data_evento">Data Evento</label>
+        <label for="data_evento">{{ $t("dateEvent") }}</label>
         <input v-model="data" type="date" id="data_evento" />
       </div>
 
       <div class="form-group">
-        <label for="password_convalidatori">Password Convalidatori</label>
+        <label for="password_convalidatori">{{ $t("validatorsPassword") }}</label>
         <input
           v-model="passwordConvalidatori"
           type="text"
           id="password_convalidatori"
-          placeholder="Password per i convalidatori"
+          placeholder=""
         />
         <small class="form-text">Fornisci questa password ai tuoi convalidatori per l’accesso.</small>
       </div>
 
       <div class="form-group upload">
-        <label for="inputGroupFile01">Immagine di copertina</label>
+        <label for="inputGroupFile01">{{ $t("imgCover") }}</label>
         <input
           type="file"
           id="inputGroupFile01"
@@ -43,11 +43,11 @@
       </div>
 
       <div v-if="aliasEvento" class="alert-success">
-        <p>Evento inserito correttamente!</p>
-        <p><strong>Alias generato:</strong> <span>{{ aliasEvento }}</span></p>
+        <p>{{ $t("successfullyInsertEvent") }}</p>
+        <p><strong>{{$t("aliasEventGenerated")}}</strong> <span>{{ aliasEvento }}</span></p>
       </div>
 
-      <button class="btn-primary btn-center" @click="inserisciEvento">Inserisci Evento</button>
+      <button class="btn-primary btn-center" @click="inserisciEvento">{{ $t("insertEvent") }}</button>
     </div>
   </div>
 </template>

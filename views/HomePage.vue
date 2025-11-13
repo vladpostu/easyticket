@@ -1,8 +1,7 @@
 <template>
-  <h1>{{  $t('welcome') }}</h1>
     <div class="image-container">
         <img src="../src/assets/imgs/crowd-1056764_1280.jpg" class="img-fluid" alt="" />
-        <div class="moto">Scopri gli eventi dedicati a te</div>
+        <div class="moto">{{ $t("welcome")}}</div>
     </div>
     <EventiView :organizzatoreId=this.organizzatoreId />
 </template>

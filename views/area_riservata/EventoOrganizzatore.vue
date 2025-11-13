@@ -4,14 +4,15 @@
     <div>{{ evento.data }}</div>
   </div>
 
-  <div class="partecipanti-label">Partecipanti</div>
+  <div class="partecipanti-label">{{ $t("participants") }}</div>
 
   <!-- Input ricerca -->
   <div class="search-wrapper">
+    <label for="" class="mb-2">{{ $t("searchParticipant") }}</label>
     <input
       type="text"
       v-model="screaming"
-      placeholder="Cerca partecipante per nome o cognome..."
+      placeholder=""
       class="search-input"
     />
     <span v-if="screaming" class="clear-btn" @click="screaming=''">&times;</span>
@@ -22,10 +23,10 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Cognome</th>
-          <th scope="col">Data di Nascita</th>
-          <th scope="col">Presenza confermata</th>
+          <th scope="col">{{ $t("name") }}</th>
+          <th scope="col">{{ $t("surname") }}</th>
+          <th scope="col">{{ $t("dateOfBirth") }}</th>
+          <th scope="col">{{ $t("presenceConfirmed") }}</th>
         </tr>
       </thead>
       <tbody>
