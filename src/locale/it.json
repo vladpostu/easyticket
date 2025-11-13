@@ -46,5 +46,8 @@
     "insertEvent": "Inserisci Evento",
     "successfullyInsertEvent": "Evento inserito correttamente!",
     "aliasEventGenerated": "Alias generato:",
-    "createAccount": "Crea Account"
+    "createAccount": "Crea Account",
+    "repeatPassword": "Reinserisci Password",
+    "strongPasswordText": "Almeno 8 caratteri, di cui uno tra [!, $, #, @]",
+    "passwordDoesntMatch": "Lunghezza, formato o password non coincide"
 }

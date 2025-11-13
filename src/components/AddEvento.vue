@@ -47,7 +47,7 @@
         <p><strong>{{$t("aliasEventGenerated")}}</strong> <span>{{ aliasEvento }}</span></p>
       </div>
 
-      <button class="btn-primary btn-center" @click="inserisciEvento">{{ $t("insertEvent") }}</button>
+      <button :disabled="!validate" class="btn-primary btn-center" @click="inserisciEvento">{{ $t("insertEvent") }}</button>
     </div>
   </div>
 </template>

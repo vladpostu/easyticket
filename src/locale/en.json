@@ -46,5 +46,7 @@
     "insertEvent": "Insert Event",
     "successfullyInsertEvent": "Event inserted successfully!",
     "aliasEventGenerated": "Alias generated:",
-    "createAccount": "Create Account"
+    "createAccount": "Create Account",
+    "repeatPassword": "Repeat Password",
+    "strongPasswordText": "At least 8 characters, including one of [!, $, #, @]"
 }

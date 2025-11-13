@@ -8,26 +8,33 @@
     <div class="form-container">
       <div class="form-group">
         <label for="email_organizzatore">{{ $t("email") }}</label>
-        <input
-          v-model="email"
-          type="email"
-          id="email_organizzatore"
-          placeholder=""
-        />
+        <input v-model="email" type="email" id="email_organizzatore" placeholder="" />
       </div>
 
-      
+
       <div class="form-group">
         <label for="password_organizzatore">{{ $t("password") }}</label>
-        <input
-          v-model="password"
-          type="password"
-          id="password_organizzatore"
-          placeholder=""
-        />
+        <input v-model="password" type="password" id="password_organizzatore" placeholder="" />
+        <div class="form-text" style="font-size: 0.75em;">{{ $t("strongPasswordText") }}</div>
       </div>
 
-      <button class="btn-primary" @click="addOrganizzatore">{{$t("createAccount")}}</button>
+      <div class="form-group">
+        <label for="password_organizzatore">{{ $t("repeatPassword") }}</label>
+        <input v-model="passwordRepeat" type="password" id="password_organizzatore" placeholder=""
+          @blur="validatePassword" 
+          @input="validatePassword"/>
+      </div>
+
+      <div class="form-feedback">
+        <transition name="fade">
+          <div v-if="!validPassword && passwordRepeat.length > 0" class="error-message">
+            {{ $t("passwordDoesntMatch") }}
+          </div>
+        </transition>
+      </div>
+
+
+      <button :disabled="!validPassword" class="btn-primary" @click="addOrganizzatore">{{ $t("createAccount") }}</button>
 
       <div class="registrati-link">
         {{ $t("alreadyHaveAccount") }}
@@ -38,6 +45,45 @@
 </template>
 
 <style scoped>
+
+/* --- PASSWORD FEEDBACK --- */
+.form-feedback {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.error-message {
+  background-color: #ffe8e8;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  width: 100%;
+  text-align: center;
+  animation: shake 0.25s ease-in-out;
+}
+
+/* Fade-in effect for smooth appearance */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Subtle shake animation for visibility */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
 .area-organizzatore {
   max-width: 400px;
   margin: 60px auto;
@@ -110,14 +156,22 @@ h2 {
   transition: background-color 0.3s ease;
   cursor: pointer;
   width: 100%;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  margin: 0 auto; /* centrato orizzontalmente */
 }
+
 
 .btn-primary:hover {
   background-color: #174170;
 }
+
+.btn-primary:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
 
 /* --- LINK --- */
 .registrati-link {
@@ -152,42 +206,51 @@ h2 {
 
 
 <script>
-import {doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default {
-    name: "OrganizzatoreRegistrati",
-    data() {
-        return {
-            email: "",
-            password: "",
-        }
-    },
-    methods: {
-        async addOrganizzatore() {
-            try {
-                const cred = await createUserWithEmailAndPassword(
-                    auth, this.email, this.password
-                )
-
-                await setDoc(doc(db, "organizzatori", cred.user.uid), {
-                    email: this.email,
-                    createdAt: new Date(),
-                });
-
-
-                // localStorage.setItem("organizzatoreId", docRef.id);
-                // localStorage.setItem("organizzatoreEmail", this.email);
-
-                this.$router.push("/area-riservata/area-organizzatore")
-            } catch(error) {
-                console.error(error);
-            }
-
-            this.email = "";
-            this.password = "";
-        }
+  name: "OrganizzatoreRegistrati",
+  data() {
+    return {
+      email: "",
+      password: "",
+      passwordRepeat: "",
+      validPassword: false,
     }
+  },
+  methods: {
+    async addOrganizzatore() {
+      try {
+        const cred = await createUserWithEmailAndPassword(
+          auth, this.email, this.password
+        )
+
+        await setDoc(doc(db, "organizzatori", cred.user.uid), {
+          email: this.email,
+          createdAt: new Date(),
+        });
+
+
+        // localStorage.setItem("organizzatoreId", docRef.id);
+        // localStorage.setItem("organizzatoreEmail", this.email);
+
+        this.$router.push("/area-riservata/area-organizzatore")
+      } catch (error) {
+        console.error(error);
+      }
+
+      this.email = "";
+      this.password = "";
+    },
+    validatePassword() {
+      const toInclude = ["!", "$", "@", "#"]
+      const hasSomeIncluded = toInclude.some(e => this.password.includes(e))
+      this.validPassword = (this.password == this.passwordRepeat && hasSomeIncluded && !(this.password.length < 8));
+    }
+  }
 }
+
+
 </script>
