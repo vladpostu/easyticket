@@ -26,7 +26,7 @@
     "validatorArea": "Validator Area",
     "validatorAreaText": "Login to validate participants for the event",
     "aliasEvent": "Event Alias",
-    "credentialsFromOrganizer": "Credentials are provided by the organizer.",
+    "credentialsFromOrganizer": "Credentials are provided by the organizer",
     "infoParticipant": "Participant Details",
     "alreadyConfirmed": "Attendance already confirmed",
     "dataIsCorrectMessage": "Are the details correct?",
@@ -48,5 +48,8 @@
     "aliasEventGenerated": "Alias generated:",
     "createAccount": "Create Account",
     "repeatPassword": "Repeat Password",
-    "strongPasswordText": "At least 8 characters, including one of [!, $, #, @]"
+    "strongPasswordText": "At least 8 characters, including one of [!, $, #, @],",
+    "passwordDoesntMatch": "Length, format, or password do not match",
+    "loginFailed": "Incorrect Email and/or Password",
+    "validatorLoginFailed": "Incorrect Event Alias and/or Password"
 }

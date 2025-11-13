@@ -27,6 +27,14 @@
         />
       </div>
 
+      <div class="form-feedback">
+        <transition name="fade">
+          <div v-if="loginFailed" class="error-message">
+            {{ $t("loginFailed") }}
+          </div>
+        </transition>
+      </div>
+
       <button class="btn-primary" @click="login">{{$t("loginButton")}}</button>
 
       <div class="registrati-link">
@@ -136,6 +144,44 @@ h2 {
   text-decoration: underline;
 }
 
+/* --- PASSWORD FEEDBACK --- */
+.form-feedback {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.error-message {
+  background-color: #ffe8e8;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  width: 100%;
+  text-align: center;
+  animation: shake 0.25s ease-in-out;
+}
+
+/* Fade-in effect for smooth appearance */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Subtle shake animation for visibility */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
 /* --- RESPONSIVE --- */
 @media (max-width: 500px) {
   .form-container {
@@ -160,7 +206,8 @@ export default {
     data() {
         return {
             email: "",
-            password: ""
+            password: "",
+            loginFailed: false,
         }
     },
     methods: {
@@ -176,7 +223,7 @@ export default {
                 localStorage.setItem("organizzatoreId", cred.user.uid)
                 this.$router.push({name: "AreaOrganizzatore"})
             } catch (error) {
-                console.log(error);
+                this.loginFailed = true;
             }
         }
     },

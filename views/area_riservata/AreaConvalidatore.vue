@@ -27,6 +27,14 @@
         />
       </div>
 
+      <div v-if="loginFailed" class="form-feedback">
+        <transition name="fade">
+          <div v-if="loginFailed" class="error-message">
+            {{ $t("validatorLoginFailed") }}
+          </div>
+        </transition>
+      </div>
+
       <small class="form-text">{{ $t("credentialsFromOrganizer") }}</small>
 
       <button class="btn-primary" @click="convalidatoreLogin">{{ $t("loginButton") }}</button>
@@ -209,6 +217,44 @@ h2 {
   border: 1px solid #ffeeba;
 }
 
+/* --- PASSWORD FEEDBACK --- */
+.form-feedback {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.error-message {
+  background-color: #ffe8e8;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  width: 100%;
+  text-align: center;
+  animation: shake 0.25s ease-in-out;
+}
+
+/* Fade-in effect for smooth appearance */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Subtle shake animation for visibility */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
 /* --- RESPONSIVE --- */
 @media (max-width: 500px) {
   .form-container {
@@ -247,7 +293,8 @@ export default {
                 cognome: "",
                 dataNascita: "",
                 presenzaConfermata: null,
-            }
+            },
+            loginFailed: false,
         }
     },
 
@@ -275,7 +322,7 @@ export default {
                 localStorage.setItem("convalidatoreLogged", "true");
                 this.isLogged = true;
             } else {
-                alert("credenziali errate");
+                this.loginFailed = true;
             }
         },
         gestisciQR(qrData) {

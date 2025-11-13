@@ -26,7 +26,7 @@
     "validatorArea": "Area Convalidatore",
     "validatorAreaText": "Accedi per convalidare i partecipanti all’evento",
     "aliasEvent": "Alias Evento",
-    "credentialsFromOrganizer": "Le credenziali vengono fornite dall'organizzatore.",
+    "credentialsFromOrganizer": "Le credenziali vengono fornite dall'organizzatore",
     "infoParticipant": "Dettagli Partecipante",
     "alreadyConfirmed": "Presenza già confermata",
     "dataIsCorrectMessage": "I dati sono corretti?",
@@ -49,5 +49,7 @@
     "createAccount": "Crea Account",
     "repeatPassword": "Reinserisci Password",
     "strongPasswordText": "Almeno 8 caratteri, di cui uno tra [!, $, #, @]",
-    "passwordDoesntMatch": "Lunghezza, formato o password non coincide"
+    "passwordDoesntMatch": "Lunghezza, formato o password non coincide",
+    "loginFailed": "Email e/o Password errata",
+    "validatorLoginFailed": "Alias Evento e/o Password errata"
 }

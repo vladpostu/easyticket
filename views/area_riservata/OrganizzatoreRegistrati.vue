@@ -8,7 +8,7 @@
     <div class="form-container">
       <div class="form-group">
         <label for="email_organizzatore">{{ $t("email") }}</label>
-        <input v-model="email" type="email" id="email_organizzatore" placeholder="" />
+        <input v-model="email" type="email" ref="emailInput" id="email_organizzatore" placeholder="" />
       </div>
 
 
@@ -20,7 +20,7 @@
 
       <div class="form-group">
         <label for="password_organizzatore">{{ $t("repeatPassword") }}</label>
-        <input v-model="passwordRepeat" type="password" id="password_organizzatore" placeholder=""
+        <input v-model="passwordRepeat" type="password" id="password_organizzatore_repeat" placeholder=""
           @blur="validatePassword" 
           @input="validatePassword"/>
       </div>
