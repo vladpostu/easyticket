@@ -18,7 +18,7 @@
 
       <section class="eventi-org">
         <h6 class="fw-bold">{{ $t("yourEvents") }}</h6>
-        <EventiView class="eventi-comp" :organizzatoreId="organizzatoreIdRecuperato" />
+        <EventiView v-if="currentUser && currentUser.uid" class="eventi-comp" :organizzatoreId="currentUser.uid" />
       </section>
     </main>
   </div>
@@ -155,7 +155,7 @@ export default {
     beforeMount() {
     },
     mounted() {
-        console.log("org id " + localStorage.getItem("organizzatoreId"))
+      
     },
     data() {
         return {

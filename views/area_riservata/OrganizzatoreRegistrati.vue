@@ -209,6 +209,8 @@ h2 {
 import { doc, setDoc } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
 
 export default {
   name: "OrganizzatoreRegistrati",
@@ -232,6 +234,7 @@ export default {
           createdAt: new Date(),
         });
 
+        signInWithEmailAndPassword(auth, this.email, this.password)
 
         // localStorage.setItem("organizzatoreId", docRef.id);
         // localStorage.setItem("organizzatoreEmail", this.email);

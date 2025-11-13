@@ -148,7 +148,7 @@ export default {
     methods: {
         invertiData,
         async fetchEventi() {
-            if (!this.organizzatoreId) {
+            if (!this.organizzatoreId) { // if there is not organizer uid
                 const eventiRef = collection(db, "eventi")
                 const snapshot = await getDocs(eventiRef)
 
@@ -158,12 +158,15 @@ export default {
                 }))
 
                 this.loaded = true;
-            } else {
+            } else { // if there is organizer uidsß
                 const q = query(collection(db, "eventi"),
                     where("idOrganizzatore", "==", this.organizzatoreId)
                 )
 
                 const snapshot = await getDocs(q);
+
+                this.loaded = true;
+
                 this.eventi = snapshot.docs.map((evento) => ({
                     id: evento.id,
                     ...evento.data()
@@ -180,6 +183,7 @@ export default {
     },
     mounted() {
         this.fetchEventi();
+        console.log(this.organizzatoreId)
     }
 }
 </script>

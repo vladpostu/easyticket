@@ -47,7 +47,7 @@
         <p><strong>{{$t("aliasEventGenerated")}}</strong> <span>{{ aliasEvento }}</span></p>
       </div>
 
-      <button :disabled="!validate" class="btn-primary btn-center" @click="inserisciEvento">{{ $t("insertEvent") }}</button>
+      <button class="btn-primary btn-center" @click="inserisciEvento">{{ $t("insertEvent") }}</button>
     </div>
   </div>
 </template>
@@ -194,6 +194,7 @@ h2 {
 import { collection, addDoc } from 'firebase/firestore';
 import { db, storage } from '../../firebase/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { auth } from '../../firebase/firebase';
 
 export default {
     name: 'AddEvento',
@@ -206,12 +207,13 @@ export default {
             aliasEvento: "",
             passwordConvalidatori: "",
             imgCopertina: null, 
+            currentUser: auth.currentUser,
         }
     },
     methods: {
         async inserisciEvento() {
-            this.emailOrganizzatore = localStorage.getItem("organizzatoreEmail");
-            this.idOrganizzatore = localStorage.getItem("organizzatoreId");
+            this.emailOrganizzatore = this.currentUser.email;
+            this.idOrganizzatore = this.currentUser.uid;
    
             let imgCopertinaURL = "";
 

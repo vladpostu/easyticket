@@ -17,7 +17,7 @@ export default {
     },
     methods: {
         goToEventiOrganizzatore() {
-            //this.$router.push("/area-riservata/area-organizzatore/eventi-organizzatore")
+            this.$router.push({name: "AreaOrganizzatore"})
         }
     }
 }

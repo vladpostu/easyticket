@@ -84,7 +84,7 @@ h2 {
 
 .card-text {
   font-size: 1rem;
-  color: #d3e2ef;
+  color: #d3e2ef !important;
   margin-bottom: 25px;
 }
 
