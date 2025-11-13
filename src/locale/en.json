@@ -45,5 +45,6 @@
     "imgCover": "Cover Image",
     "insertEvent": "Insert Event",
     "successfullyInsertEvent": "Event inserted successfully!",
-    "aliasEventGenerated": "Alias generated:"
+    "aliasEventGenerated": "Alias generated:",
+    "createAccount": "Create Account"
 }

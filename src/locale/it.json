@@ -11,7 +11,7 @@
     "reservedArea": "Area Riservata",
     "organizerArea": "Area Organizzatore",
     "organizer": "Organizzatore",
-    "organizerText": "Crea, gestisci e verifica i tuoi eventi",
+    "organizerText": "Crea, gestisci e verifica i tuoi eventi creati",
     "loginButton": "Accedi",
     "validator": "Convalidatore",
     "validatorText": "Verifica e convalida la presenza dei partecipanti",
@@ -45,5 +45,6 @@
     "imgCover": "Immagine di copertina",
     "insertEvent": "Inserisci Evento",
     "successfullyInsertEvent": "Evento inserito correttamente!",
-    "aliasEventGenerated": "Alias generato:"
+    "aliasEventGenerated": "Alias generato:",
+    "createAccount": "Crea Account"
 }

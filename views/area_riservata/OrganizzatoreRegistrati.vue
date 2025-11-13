@@ -18,7 +18,7 @@
 
       
       <div class="form-group">
-        <label for="password_organizzatore">${{ $t("password") }}</label>
+        <label for="password_organizzatore">{{ $t("password") }}</label>
         <input
           v-model="password"
           type="password"
@@ -27,7 +27,7 @@
         />
       </div>
 
-      <button class="btn-primary" @click="addOrganizzatore">Crea Account</button>
+      <button class="btn-primary" @click="addOrganizzatore">{{$t("createAccount")}}</button>
 
       <div class="registrati-link">
         {{ $t("alreadyHaveAccount") }}
