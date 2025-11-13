@@ -1,13 +1,12 @@
-
 <template>
   <div class="header">
-        <div class="header-box">
-            <router-link style="text-decoration: none;" :to="{ name: 'HomeView' }" class="logo">EasyTicket</router-link>
-            <router-link to="/area-riservata" class="area-riservata">
-                <div>AREA RISERVATA</div>
-            </router-link>
-        </div>
+    <div class="header-box">
+      <router-link style="text-decoration: none;" :to="{ name: 'HomeView' }" class="logo">EasyTicket</router-link>
+      <router-link to="/area-riservata" class="area-riservata">
+        <div>AREA RISERVATA</div>
+      </router-link>
     </div>
+  </div>
   <router-view />
 </template>
 
@@ -92,11 +91,11 @@ export default {
 </script>
 
 <style>
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 </style>

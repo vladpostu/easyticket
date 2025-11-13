@@ -1,24 +1,10 @@
 <template>
+  <h1>{{  $t('welcome') }}</h1>
     <div class="image-container">
         <img src="../src/assets/imgs/crowd-1056764_1280.jpg" class="img-fluid" alt="" />
         <div class="moto">Scopri gli eventi dedicati a te</div>
     </div>
-    <EventiView :organizzatoreId=this.organizzatoreId />
-    <!-- <div class="eventi">
-        <div>Ultime aggiunte</div>
-        <div class="eventi-container">
-            <div v-for="evento in eventi" :key="evento.id" class="evento">
-                <router-link :to="{ name: 'EventoView', params: { eventoId: evento.id } }">
-                    <div class="evento_nome">
-                        {{  evento.nome_evento }}
-                    </div> 
-                    <div class="evento_data">
-                        {{  evento.data }}
-                    </div>
-                </router-link>
-            </div>
-        </div>
-    </div> -->
+    <EventiView :organizzatoreId=organizzatoreId />
 </template>
 
 <style scoped>
