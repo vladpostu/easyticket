@@ -51,5 +51,10 @@
     "strongPasswordText": "Almeno 8 caratteri, di cui uno tra [!, $, #, @]",
     "passwordDoesntMatch": "Lunghezza, formato o password non coincide",
     "loginFailed": "Email e/o Password errata",
-    "validatorLoginFailed": "Alias Evento e/o Password errata"
+    "validatorLoginFailed": "Alias Evento e/o Password errata",
+    "artists": "Artisti",
+    "descriptionEvent": "Descrizione dell'evento (max. 100 parole)",
+    "in": "tra",
+    "days": "giorni",
+    "eventExpired": "Evento finito"
 }

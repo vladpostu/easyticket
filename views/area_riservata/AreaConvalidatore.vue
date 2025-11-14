@@ -284,7 +284,7 @@ export default {
     data() {
         return {
             isLogged:  null,
-            evento: "", //Evento inteso come aliasEvento su AddEvento
+            evento: "", //Evento inteso come aliasEvento su AddEvent
             password: "", 
             eventoId: "",
             idPartecipante: "",

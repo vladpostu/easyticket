@@ -1,9 +1,9 @@
 <template>
-    <AddEvento @eventoInserito="goToEventiOrganizzatore"/>
+    <AddEvent @eventoInserito="goToEventiOrganizzatore"/>
 </template>
 
 <script>
-import AddEvento from '@/components/AddEvento.vue';
+import AddEvent from '@/components/AddEvent.vue';
 
 export default {
     name: "AggiungiEvento",
@@ -13,7 +13,7 @@ export default {
         }
     },
     components: {
-        AddEvento,
+        AddEvent,
     },
     methods: {
         goToEventiOrganizzatore() {

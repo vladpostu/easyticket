@@ -1,7 +1,7 @@
 <template>
   <div v-if="evento" class="mt-5">
     <h3>{{ evento.nome_evento }}</h3>
-    <div>{{ evento.data }}</div>
+    <div>{{ invertiData(evento.data) }}</div>
   </div>
 
   <div class="partecipanti-label">{{ $t("participants") }}</div>
@@ -232,6 +232,7 @@ h3 {
 <script>
 import { db } from '../../firebase/firebase';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { invertiData } from '@/utils/dateUtils';
 
 export default {
   name: "EventoOrganizzatore",
@@ -244,6 +245,7 @@ export default {
     }
   },
   methods: {
+    invertiData,
     async fetchDatiEvento() {
       try {
         const eventoRef = doc(db, "eventi", this.eventoId)

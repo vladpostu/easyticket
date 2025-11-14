@@ -8,12 +8,7 @@
     <div class="form-container">
       <div class="form-group">
         <label for="nome_evento">{{ $t("nameEvent") }}</label>
-        <input
-          v-model="nome_evento"
-          type="text"
-          id="nome_evento"
-          placeholder="Summer Fest 2025"
-        />
+        <input v-model="nome_evento" type="text" id="nome_evento" placeholder="Summer Fest 2025" />
       </div>
 
       <div class="form-group">
@@ -23,28 +18,30 @@
 
       <div class="form-group">
         <label for="password_convalidatori">{{ $t("validatorsPassword") }}</label>
-        <input
-          v-model="passwordConvalidatori"
-          type="text"
-          id="password_convalidatori"
-          placeholder=""
-        />
+        <input v-model="passwordConvalidatori" type="text" id="password_convalidatori" placeholder="" />
         <small class="form-text">Fornisci questa password ai tuoi convalidatori per l’accesso.</small>
       </div>
 
       <div class="form-group upload">
         <label for="inputGroupFile01">{{ $t("imgCover") }}</label>
-        <input
-          type="file"
-          id="inputGroupFile01"
-          @change="onFileChange"
-          class="form-control"
-        />
+        <input type="file" id="inputGroupFile01" @change="onFileChange" class="form-control" />
       </div>
+
+      <div class="form-group">
+        <label for="artists">{{ $t("artists") }}</label>
+        <input v-model="artists" type="text" id="artists" placeholder="Carl Cox, Cera Khin, The Martinez Brothers" />
+      </div>
+
+      <div class="form-group">
+        <label for="description">{{ $t("descriptionEvent") }}</label>
+        <textarea v-model="description" id="description" class="textarea"
+          placeholder=""></textarea>
+      </div>
+
 
       <div v-if="aliasEvento" class="alert-success">
         <p>{{ $t("successfullyInsertEvent") }}</p>
-        <p><strong>{{$t("aliasEventGenerated")}}</strong> <span>{{ aliasEvento }}</span></p>
+        <p><strong>{{ $t("aliasEventGenerated") }}</strong> <span>{{ aliasEvento }}</span></p>
       </div>
 
       <button class="btn-primary btn-center" @click="inserisciEvento">{{ $t("insertEvent") }}</button>
@@ -150,6 +147,23 @@ h2 {
   margin-top: 4px;
 }
 
+.form-group textarea.textarea {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s ease;
+}
+
+.form-group textarea.textarea:focus {
+  outline: none;
+  border-color: #0C2B4E;
+  box-shadow: 0 0 4px rgba(12, 43, 78, 0.25);
+}
+
+
 /* --- BUTTON --- */
 .btn-primary {
   background-color: #0C2B4E;
@@ -197,56 +211,61 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { auth } from '../../firebase/firebase';
 
 export default {
-    name: 'AddEvento',
-    data() {
-        return {
-            nome_evento: '',
-            data: '',
-            emailOrganizzatore: "",
-            idOrganizzatore: "",
-            aliasEvento: "",
-            passwordConvalidatori: "",
-            imgCopertina: null, 
-            currentUser: auth.currentUser,
-        }
-    },
-    methods: {
-        async inserisciEvento() {
-            this.emailOrganizzatore = this.currentUser.email;
-            this.idOrganizzatore = this.currentUser.uid;
-   
-            let imgCopertinaURL = "";
-
-            if(this.imgCopertina) {
-                const storageRef = ref(storage, `copertine/${this.imgCopertina.name}`)
-                await uploadBytes(storageRef, this.imgCopertina)
-                imgCopertinaURL = await getDownloadURL(storageRef)
-            }
-
-            const nuovoEvento = {
-                nome_evento: this.nome_evento,
-                data: this.data,
-                emailOrganizzatore: this.emailOrganizzatore,
-                idOrganizzatore: this.idOrganizzatore,
-                aliasEvento: this.nome_evento.slice(0, 3) + this.data,
-                passwordConvalidatori: this.passwordConvalidatori,
-                imgCopertina: imgCopertinaURL,
-            }
-
-
-            try {
-                await addDoc(collection(db, 'eventi'), nuovoEvento)
-                this.aliasEvento = nuovoEvento.aliasEvento
-                this.data = ''
-                this.nome_evento = ''
-                this.$emit('eventoInserito')
-            } catch(error) {
-                console.log(error)
-            }
-        },
-        onFileChange(e) {
-            this.imgCopertina = e.target.files[0];
-        }
+  name: 'AddEvent',
+  data() {
+    return {
+      nome_evento: '',
+      data: '',
+      emailOrganizzatore: "",
+      idOrganizzatore: "",
+      aliasEvento: "",
+      passwordConvalidatori: "",
+      imgCopertina: null,
+      artists: "",
+      description: "",
+      currentUser: auth.currentUser,
     }
+  },
+  methods: {
+    async inserisciEvento() {
+      this.emailOrganizzatore = this.currentUser.email;
+      this.idOrganizzatore = this.currentUser.uid;
+
+      let imgCopertinaURL = "";
+
+      if (this.imgCopertina) {
+        const storageRef = ref(storage, `copertine/${this.imgCopertina.name}`)
+        await uploadBytes(storageRef, this.imgCopertina)
+        imgCopertinaURL = await getDownloadURL(storageRef)
+      }
+
+      const nuovoEvento = {
+        nome_evento: this.nome_evento,
+        data: this.data,
+        emailOrganizzatore: this.emailOrganizzatore,
+        idOrganizzatore: this.idOrganizzatore,
+        aliasEvento: this.nome_evento.slice(0, 3) + this.data,
+        passwordConvalidatori: this.passwordConvalidatori,
+        imgCopertina: imgCopertinaURL,
+        artists: this.artists,
+        description: this.description,
+
+      }
+
+
+      try {
+        await addDoc(collection(db, 'eventi'), nuovoEvento)
+        this.aliasEvento = nuovoEvento.aliasEvento
+        this.data = ''
+        this.nome_evento = ''
+        this.$emit('eventoInserito')
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    onFileChange(e) {
+      this.imgCopertina = e.target.files[0];
+    }
+  }
 }
 </script>
