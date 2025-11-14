@@ -1,314 +1,307 @@
 <template>
-    <div class="background">
-        <div class="wrapper">
+  <div class="page">
+    <div class="layout">
 
-            <div v-if="evento" class="evento-dettagli-wrapper mt-5">
-                <img :src="imgCopertinaURL" alt="">
+      <section v-if="evento" class="event-block">
 
-                <div class="evento-info">
-                    <h1 class="evento-titolo"> {{ evento.nome_evento }}</h1>
-                    <h5 class="evento-data"> {{ invertiData(evento.data )}} </h5>
-                    <div 
-  class="leftDaysToBook" 
-  :class="{
-    danger: daysLeftToBook <= 0,
-    warning: daysLeftToBook > 0 && daysLeftToBook <= 3,
-    ok: daysLeftToBook > 3
-  }"
->
-  <template v-if="daysLeftToBook > 0">
-    {{ $t("in") }} {{ daysLeftToBook }} {{ $t("days") }}
-  </template>
+        <!-- Img wrapper con badge -->
+        <div class="img-wrapper">
+          <img :src="imgCopertinaURL" class="event-img" />
 
-  <template v-else>
-    {{ $t("eventExpired") }}
-  </template>
-</div>
-
-
-                    <p class="evento-artisti">{{ evento.artists }}</p>
-
-                    <p class="evento-descrizione">
-                        {{ evento.description }}
-                    </p>
-                </div>
-            </div>
-
-            <form class="partecipante-form">
-                <h4 class="mb-4">{{ $t("registerParticipantAtEvent") }}</h4>
-
-                <div class="mb-3">
-                    <label for="nome_partecipante" class="form-label">{{ $t("name") }}</label>
-                    <input v-model="nome" type="text" class="form-control" id="nome_partecipante" />
-                </div>
-
-                <div class="mb-3">
-                    <label for="cognome_partecipante" class="form-label">{{ $t("surname") }}</label>
-                    <input v-model="cognome" type="text" class="form-control" />
-                </div>
-
-                <div class="mb-3">
-                    <label for="data_nascita_partecipante" class="form-label">{{ $t("dateOfBirth") }}</label>
-                    <input v-model="data_di_nascita" type="date" id="data_nascita_partecipante" class="form-control">
-                </div>
-
-                <button type="button" @click="aggiungiPartecipante" class="btn btn-primary mt-4">
-                    {{ $t("joinButton") }}
-                </button>
-
-                <button type="button" @click="recuperaBiglietto" class="btn btn-outline-light mt-3 btn-sm">
-                    {{ $t("recoverTicketButton") }}
-                </button>
-
-                <div class="form-text">{{ $t("recoverTicketMessage") }}</div>
-            </form>
-
+          <span 
+            class="days-left"
+            :class="{
+              expired: daysLeftToBook < 0,
+              lastday: daysLeftToBook === 0
+            }"
+          >
+            <template v-if="daysLeftToBook > 0">
+              {{ $t('in') }} {{ daysLeftToBook }} {{ $t('days') }}
+            </template>
+            <template v-else-if="daysLeftToBook === 0">
+              {{ $t("lastDay") }}
+            </template>
+            <template v-else>
+              {{ $t("eventExpired")}}
+            </template>
+          </span>
         </div>
+
+        <header class="event-info">
+          <h1 class="event-title">{{ evento.nome_evento }}</h1>
+
+          <p class="event-date">{{ invertiData(evento.data) }}</p>
+
+          <p class="event-artists">{{ evento.artists }}</p>
+          <p class="event-description">{{ evento.description }}</p>
+        </header>
+      </section>
+
+      <section class="form" :class="{ formExpired: daysLeftToBook < 0 }">
+
+        <div v-if="daysLeftToBook < 0" class="expired-banner">
+          <span>{{ $t("eventExpired") }}</span>
+        </div>
+
+        <h4 class="form-title">{{ $t("registerParticipantAtEvent") }}</h4>
+
+        <div class="field">
+          <label>{{ $t("name") }}</label>
+          <input v-model="nome" type="text" :disabled="daysLeftToBook < 0" />
+        </div>
+
+        <div class="field">
+          <label>{{ $t("surname") }}</label>
+          <input v-model="cognome" type="text" :disabled="daysLeftToBook < 0" />
+        </div>
+
+        <div class="field">
+          <label>{{ $t("dateOfBirth") }}</label>
+          <input v-model="data_di_nascita" type="date" :disabled="daysLeftToBook < 0" />
+        </div>
+
+        <button 
+          type="button" 
+          @click="aggiungiPartecipante" 
+          class="btn primary"
+          :disabled="daysLeftToBook < 0"
+        >
+          {{ $t("joinButton") }}
+        </button>
+
+        <button 
+          type="button" 
+          @click="recuperaBiglietto" 
+          class="btn outline"
+        >
+          {{ $t("recoverTicketButton") }}
+        </button>
+
+        <p class="note">{{ $t("recoverTicketMessage") }}</p>
+      </section>
+
     </div>
+  </div>
 </template>
 
-<style>
-.background {
-  background-color: #0C2B4E;
+<style scoped>
+.page {
+  width: 100%;
   min-height: 100vh;
-  width: 100%;
+  background: #0b2642;
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: #F4F4F4;
   padding: 60px 20px;
-}
-
-.wrapper {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 80px;
-  flex-wrap: wrap-reverse;
-  max-width: 1200px;
-  width: 100%;
-}
-
-/* --- DETTAGLI EVENTO --- */
-.evento-dettagli-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.evento-dettagli-wrapper img {
-  width: 450px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* WRAPPER INFO + ALERT A DESTRA */
-.evento-info {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 500px;
-  position: relative;
-  text-align: center;
-}
-
-/* TITOLO */
-.evento-titolo {
-  font-size: 2rem;
-  font-weight: 700;
   color: #fff;
 }
 
-/* DATA */
-.evento-data {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #cfe0ec;
-  margin-top: 4px;
+.layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  width: 100%;
 }
 
-/* ALERT "LEFT DAYS TO BOOK" */
-.leftDaysToBook {
+/* EVENT BLOCK */
+.event-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 460px;
+}
+
+.img-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.event-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.32);
+}
+
+.days-left {
   position: absolute;
-  right: -20px;
-  top: 0;
-  padding: 10px 16px;
-  border-radius: 10px;
+  top: 14px;
+  right: 14px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
   font-weight: 600;
-  font-size: 0.9rem;
-  backdrop-filter: blur(6px);
-  white-space: nowrap;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+  background: #e5eeff;
+  color: #17355f;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  backdrop-filter: blur(3px);
+  transition: 0.25s ease;
 }
 
-/* EVENTO PASSATO */
-.leftDaysToBook.danger {
-  background: rgba(255, 80, 80, 0.25);
-  border: 1px solid rgba(255, 80, 80, 0.45);
-  color: #ffd4d4;
+.days-left.lastday {
+  background: #ffecb3;
+  color: #6b4f00;
 }
 
-/* EVENTO VICINO */
-.leftDaysToBook.warning {
-  background: rgba(255, 200, 90, 0.25);
-  border: 1px solid rgba(255, 200, 90, 0.45);
-  color: #ffeccc;
-}
-
-/* EVENTO LONTANO */
-.leftDaysToBook.ok {
-  background: rgba(70, 190, 120, 0.25);
-  border: 1px solid rgba(70, 190, 120, 0.45);
-  color: #e1ffec;
-}
-
-/* ARTISTI */
-.evento-artisti {
-  margin-top: 12px;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #ffffff;
+.days-left.expired {
+  background: #ffdddd;
+  color: #a33a3a;
   opacity: 0.9;
 }
 
-/* DESCRIZIONE */
-.evento-descrizione {
-  margin-top: 12px;
-  font-size: 0.95rem;
-  line-height: 1.5rem;
-  color: #d5dfe8;
-  max-width: 600px;
+.event-info {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
 }
 
-/* --- FORM --- */
-.partecipante-form {
-  background: rgba(255, 255, 255, 0.08);
+.event-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.event-date {
+  color: #d3e1ed;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.event-artists {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.event-description {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  line-height: 1.6rem;
+  color: #cfd9e4;
+}
+
+/* FORM */
+.form {
+  width: 380px;
+  background: rgba(255,255,255,0.08);
+  padding: 35px 40px;
   border-radius: 12px;
-  padding: 40px 50px;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.28);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 420px;
-  backdrop-filter: blur(8px);
+  position: relative;
 }
 
-.partecipante-form h4 {
+/* FORM EXPIRED — tono coerente con il badge expired */
+.formExpired {
+  opacity: 0.6;
+  filter: grayscale(25%);
+  pointer-events: none;
+  position: relative;
+}
+
+.expired-banner {
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  background: rgba(255, 90, 90, 0.18);
+  border: 1px solid rgba(255, 150, 150, 0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  color: #ffb6b6;
+  margin-bottom: 22px;
+}
+
+.form-title {
+  font-size: 1.3rem;
   margin-bottom: 25px;
   font-weight: 600;
-  color: #fff;
 }
 
-.mb-3 {
+.field {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.mb-3 label {
-  font-size: 0.95rem;
-  color: #d7e7f3;
+.field label {
+  font-size: 0.9rem;
   margin-bottom: 6px;
+  display: block;
+  opacity: 0.9;
 }
 
-.mb-3 input {
+.field input {
   width: 100%;
-  border: none;
-  border-radius: 6px;
   padding: 10px 12px;
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #0C2B4E;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255,255,255,0.95);
+  color: #0c2b4e;
   font-weight: 500;
 }
 
-.mb-3 input:focus {
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
-}
-
-/* --- BOTTONI --- */
 .btn {
   width: 100%;
+  padding: 11px 0;
   border-radius: 6px;
-  padding: 10px 0;
   font-weight: 600;
-  transition: all 0.25s ease-in-out;
   cursor: pointer;
+  transition: 0.25s;
+  margin-top: 6px;
 }
 
-.btn-primary {
-  background-color: #1B74BB;
-  border: none;
+.primary {
+  background: #1a6cb0;
   color: #fff;
+  border: none;
+}
+.primary:hover {
+  background: #155a92;
 }
 
-.btn-primary:hover {
-  background-color: #155f99;
+.outline {
+  background: transparent;
+  color: #fff;
+  border: 1.6px solid #dce6f1;
+  margin-top: 14px;
+}
+.outline:hover {
+  background: rgba(255,255,255,0.15);
 }
 
-.btn-outline-light {
-  border: 1.5px solid #e6eef5;
-  background-color: transparent;
-  color: #f4f4f4;
-}
-
-.btn-outline-light:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-/* --- TESTO INFORMATIVO --- */
-.form-text {
+.note {
+  margin-top: 14px;
   font-size: 0.85rem;
-  margin-top: 10px;
   text-align: center;
-  color: #e0e0e0;
-  line-height: 1.3;
-  width: 80%;
+  opacity: 0.85;
 }
 
-/* --- RESPONSIVE --- */
+/* RESPONSIVE */
 @media (max-width: 768px) {
-  .wrapper {
+  .layout {
     flex-direction: column-reverse;
-    gap: 40px;
-    padding: 30px 20px;
     align-items: center;
+    gap: 40px;
   }
 
-  .evento-dettagli-wrapper img {
+  .event-block,
+  .form {
     width: 100%;
     max-width: 360px;
-    height: 240px;
   }
 
-  .evento-descrizione {
-    max-width: 90%;
-  }
-
-  .partecipante-form {
-    width: 100%;
-    max-width: 360px;
-    padding: 30px;
-  }
-
-  /* ALERT VA SOTTO IN MOBILE */
-  .leftDaysToBook {
-    position: static;
-    margin-top: 12px;
-    width: 100%;
-    text-align: center;
-  }
-
-  .evento-info {
-    text-align: center;
+  .event-img {
+    height: 230px;
   }
 }
-
 </style>
+
+
 
 <script>
 import { getDoc, doc, addDoc, collection, query, where, getDocs } from 'firebase/firestore'

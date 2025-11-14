@@ -97,6 +97,7 @@ h5 {
   transition: background-color 0.3s ease;
   color: #fff;
   text-decoration: none;
+  max-width: 300px !important;
 }
 
 .btn-primary:hover {

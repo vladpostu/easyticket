@@ -56,5 +56,6 @@
     "descriptionEvent": "Descrizione dell'evento (max. 100 parole)",
     "in": "tra",
     "days": "giorni",
-    "eventExpired": "Evento finito"
+    "eventExpired": "Evento concluso",
+    "lastDay": "Ultimo giorno"
 }

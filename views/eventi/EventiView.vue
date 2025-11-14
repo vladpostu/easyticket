@@ -5,7 +5,15 @@
 
       <div class="card-body">
         <h5 class="card-title">{{ evento.nome_evento }}</h5>
-
+        <p class="left-days-to-book" v-if="leftDaysToBookUtil(evento.data) > 0">
+          {{ $t("in") }} {{ leftDaysToBookUtil(evento.data) }} {{ $t("days") }}
+        </p>
+        <p class="left-days-to-book warning" v-if="leftDaysToBookUtil(evento.data) == 0">
+          {{$t("lastDay")}}
+        </p>
+        <p class="left-days-to-book danger" v-if="leftDaysToBookUtil(evento.data) < 0">
+          {{$t("eventExpired")}}
+        </p>
         <p class="card-date">{{ invertiData(evento.data) }}</p>
 
         <p class="card-artists">{{ evento.artists }}</p>
@@ -86,15 +94,41 @@
   text-align: left;
 }
 
+/* TITLE */
 .card-title {
   font-size: 1.25rem;
   color: #0c2b4e;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
+/* LEFT DAYS TO BOOK - base style */
+.left-days-to-book {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  background: #e8f0ff;
+  color: #1b3b69;
+}
+
+/* WARNING (ultimo giorno) */
+.left-days-to-book.warning {
+  background: #ffecb3;
+  color: #6b4f00;
+}
+
+/* DANGER (evento scaduto) */
+.left-days-to-book.danger {
+  background: #ffdddd;
+  color: #a33a3a;
+}
+
+/* DATE */
 .card-date {
-  margin: 4px 0;
+  margin: 4px 0 8px 0;
   color: #1b3b69;
   font-weight: 500;
   font-size: 0.95rem;
@@ -125,10 +159,12 @@ a {
 }
 </style>
 
+
 <script>
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
 import { invertiData } from '@/utils/dateUtils';
+import { leftDaysToBookUtil } from '@/utils/leftDaysToBookUtil';
 
 export default {
   name: "EventiView",
@@ -141,6 +177,7 @@ export default {
   props: ["organizzatoreId"],
   methods: {
     invertiData,
+    leftDaysToBookUtil,
     async fetchEventi() {
       if (!this.organizzatoreId) { // if there is not organizer uid
         const eventiRef = collection(db, "eventi")
