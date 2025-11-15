@@ -107,7 +107,7 @@
 
 import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
-import EventiView from './eventi/EventiView'
+import EventiView from './eventi/EventiView.vue'
 
 export default {
     name: 'HomePage',

@@ -306,7 +306,7 @@
 <script>
 import { getDoc, doc, addDoc, collection, query, where, getDocs } from 'firebase/firestore'
 import { db } from '../firebase/firebase'
-import { invertiData } from '@/utils/dateUtils';
+import { invertiData } from '@/utils/dateUtils.js';
 
 export default {
     name: "EventoView",
