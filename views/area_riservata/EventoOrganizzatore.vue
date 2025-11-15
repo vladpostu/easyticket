@@ -226,9 +226,6 @@ h3 {
 
 </style>
 
-
-
-
 <script>
 import { db } from '../../firebase/firebase';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
