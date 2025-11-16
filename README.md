@@ -27,7 +27,7 @@ A modern, cloud-based ticketing web application that simplifies event management
 
 ## Tech Stack
 
-- **Frontend**: Vue.js 3 - Progressive JavaScript Framework
+- **Frontend**: Vue.js 3 - Progressive JavaScript Framework (Vite configuration)
 - **Backend**: Firebase - Google's mobile platform
   - **Firestore**: NoSQL database for real-time data
   - **Authentication**: Secure user management
@@ -53,9 +53,7 @@ A modern, cloud-based ticketing web application that simplifies event management
 
 1. **Run project**
    ```bash
-   npm run serve
-
-
+   npm run dev
 
 ## Support
 
