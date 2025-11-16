@@ -20,7 +20,6 @@
   font-family: "Poppins", "Inter", system-ui, sans-serif;
 }
 
-/* Immagine di background */
 .image-container img {
   position: absolute;
   inset: 0;
@@ -36,7 +35,6 @@
   filter: brightness(0.8);
 }
 
-/* Overlay scuro per contrasto */
 .image-container::after {
   content: "";
   position: absolute;
@@ -49,7 +47,6 @@
   z-index: 1;
 }
 
-/* Testo principale */
 .image-container .moto {
   position: relative;
   z-index: 2;
@@ -68,7 +65,6 @@
   transform: translateY(10px);
 }
 
-/* Effetto di entrata fluido */
 @keyframes slideFadeIn {
   0% {
     opacity: 0;
@@ -80,7 +76,6 @@
   }
 }
 
-/* Responsive */
 @media (max-width: 992px) {
   .image-container {
     height: 340px;

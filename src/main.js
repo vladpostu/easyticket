@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from '../router'
-import { createI18n } from 'vue-i18n/dist/vue-i18n.esm-bundler.js'
+import { createI18n } from 'vue-i18n'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css';
